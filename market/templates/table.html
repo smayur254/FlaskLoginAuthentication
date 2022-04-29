@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}
+    table page
+{% endblock %}
+
+{% block content %}
+
+<div class="row" style="margin: 15px auto; ">
+  <div class="col-8" style="padding:5px">
+    <h1>Available items here!</h1>
+    <p>Click to add items.</p>
+    <br>
+    <table class="table table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Barcode</th>
+          <th scope="col">Price</th>
+          <th scope="col">Button</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for item in items %}
+          {% include 'include/include_item.html' %}
+          <tr>
+              <th scope="row">{{ item.id }}</th>
+              <td>{{ item.name }}</td>
+              <td>{{ item.barcode }}</td>
+              <td>{{ item.price }}$</td>
+              <td>
+                  <button type="button" class="btn btn-info" data-target="#exampleModal-info-{{ item.id }}" data-toggle="modal">Info</button>
+                  <button type="button" class="btn btn-success" data-target="#exampleModal-purchase-{{ item.id }}" data-toggle="modal">Buy</button>
+              </td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-4" style="padding:5px">
+    <h1>Owned items here!</h1>
+    <p>Click to remove item.</p>
+    <br>
+    <div class="row">
+      {% for owned_item in owned_item %}
+      {% include 'include/exclude_item.html' %}
+        <div class="col-md-6">
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h5 class="card-title">{{ owned_item.name }}</h5>
+              <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal-sell-{{ owned_item.id }}">Sell</button>
+              <p class="card-text"><strong>Cost of this item is {{ owned_item.price }}$.</strong></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
